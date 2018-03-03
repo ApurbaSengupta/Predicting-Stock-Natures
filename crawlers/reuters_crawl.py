@@ -1,5 +1,5 @@
 from newspaper import Article
-from lxml import html, etree;
+from lxml import html, etree
 import json
 
 # Reading Data from website
@@ -9,7 +9,7 @@ site_url = "https://www.reuters.com";
 
 all_articles = {}
 
-with open("output.json", "r") as f:
+with open("../output.json", "r") as f:
     all_articles = json.load(f);
 
 for stock in stocks:
