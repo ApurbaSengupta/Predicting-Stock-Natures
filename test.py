@@ -3,11 +3,11 @@ import sys
 
 data_store = {}
 with open("data_store.json", "r") as f:
-    data_store = json.load(f);
+    data_store = json.load(f)
 
-arr = data_store[sys.argv[1]]
-print(len(arr))
-for i in range(len(arr)):
-    print(arr[i]["url"])
-    print(arr[i]["article"])
-    print("=========================")
+sum = 0;
+for key in data_store:
+    print(key + ": " + str(len(data_store[key])))
+    sum += len(data_store[key])
+
+print("Total Articles: " + str(sum))

@@ -1,53 +1,74 @@
 from urllib.request import urlopen
 from urllib.parse import urlencode
 from newspaper import Article
+import requests
 import pickle
 import json
 import time
 import os
 
-def parse_article(article, data_store, seen_urls):
+def parse_article(article, article_data, seen_urls, cookies):
     article_url = article["url"]
     if article_url not in seen_urls:
         print("Downloading: " + article_url)
         print("")
-        news_article = Article(article_url)
+
+        article_data["url"] = article_url
+        article_data["host"] = article["source"]["id"]
+
         try:
-            news_article.download()
-            news_article.parse()
+            parsed_text = ""
+            # download article normally if no cookies are needed
+            if len(cookies) == 0:
+                news_article = Article(article_url)
+                news_article.download()
+                news_article.parse()
+                text = news_article.text
+                parsed_text = " ".join(text.split("\n"))
+            else:
+                # download article with cookies if needed
+                print("parsing requests with cookies")
+                r = requests.get(article_url, cookies=cookies)
+                news_article = Article("")
+                news_article.download(input_html=r.text)
+                news_article.parse()
+                text = news_article.text
+                parsed_text = " ".join(text.split("\n"))
 
-            text = news_article.text
-            parsed_text = " ".join(text.split("\n"))
-
-            data_store["article"] = parsed_text
-            data_store["url"] = article_url
-            data_store["host"] = article["source"]["id"]
+            article_data["article"] = parsed_text
             seen_urls.add(article_url);
         except:
             print("could not parse article")
 
 
-def fetch_data_symbol(query, data_store, stock, source, seen_urls):
+def fetch_data_symbol(query, data_store, stock, source, cookies, seen_urls):
     url = "https://newsapi.org/v2/everything"
     data = {
         "sources":source,
         "q":query,
         "from":"2017-01-01",
         "language":"en",
-        "apiKey":"1b0a021f33f94ebb8afb9ca35defd0eb"
+        "apiKey":"eb3a4219f13a4ddaa7d5b9f82c6df28a"
     }
-    encoded_data = urlencode(data)
+    #encoded_data = urlencode(data)
     try:
-        contents = json.loads(urlopen(url + "?" + encoded_data).read().decode("utf-8"))
+    #contents = json.loads(urlopen(url + "?" + encoded_data).read().decode("utf-8"))
+        r = requests.get(url, params=data)
+        contents = json.loads(r.text)
+        #print(r.text)
         articles = contents["articles"]
 
-        if len(articles) != 0:
+    # initialize the array of articles for new stock
+        if len(articles) != 0 and (stock not in data_store):
             data_store[stock] = []
 
+    # add articles to data_store
         for article in articles:
             article_data = {}
             article_data["date"] = article["publishedAt"]
-            parse_article(article, article_data, seen_urls)
+            parse_article(article, article_data, seen_urls, cookies)
+
+            # only add articles that could be downloaded and parsed
             if "article" in article_data:
                 data_store[stock].append(article_data)
     except:
@@ -67,22 +88,62 @@ def get_all_articles():
     else:
         return {}
 
+def get_cookies(cookie_file):
+    cookies = {}
+
+    with open(cookie_file, "r") as f:
+        line = f.readline()
+        tokens = line.split(";")
+        for token in tokens:
+            parts = token.split("=")
+            key = parts[0].strip()
+            val = parts[1].strip()
+            cookies[key] = val
+
+    return cookies
 
 if __name__ == "__main__":
+
+    # Initialize data structures to collect article information
     all_articles = get_all_articles()
     stock_to_query = {}
     seen_urls = get_seen_urls()
-    stock_to_query["AAPL"] = "(Apple Inc OR Apple) NOT Apples"
-    stock_to_query["MSFT"] = "MSFT or Microsoft"
-    stock_to_query["GOOGL"] = "GOOGL or Google"
-    stock_to_query["FB"] = "facebook"
-    sources = ["reuters", "bloomberg", "business-insider", "techcrunch", "the-new-york-times"]
 
-    for stock in stock_to_query.keys():
+    # correlate stock ticker to search query
+    stock_to_query["AAPL"] = "(Apple Inc OR Apple OR apple) NOT (Apples OR apples)"
+    '''stock_to_query["MSFT"] = "Microsoft OR Microsoft Corporation OR microsoft"
+    stock_to_query["GOOGL"] = "google OR Google"
+    stock_to_query["FB"] = "Facebook OR facebook"
+    #stock_to_query ["SNAP"] = "Snapchat OR snapchat"
+    stock_to_query["PYPL"] = "PayPal OR Paypal OR paypal"
+    stock_to_query["TSLA"] = "Tesla OR tesla"
+    stock_to_query["AMZN"] = "(AMZN OR Amazon OR amazon) NOT (forest)"
+    stock_to_query["IBM"] = "IBM OR ibm"
+    stock_to_query["INTC"] = "INTC OR Intel"
+    stock_to_query["NFLX"] = "Netflix OR netflix OR NFLX"
+    stock_to_query["NVDA"] = "NVDA OR Nvdia OR nvidia"
+    stock_to_query["BABA"] = "BABA OR Alibaba OR alibaba"'''
+
+    # initialize sources and cookies for some sources
+    #sources = ["reuters", "bloomberg", "business-insider", "techcrunch", "the-new-york-times", 
+    #"techradar", "financial-times", "engadget", "the-wall-street-journal"]
+
+    sources = ["bloomberg"]
+
+    cookie_data = {}
+    cookie_data["the-wall-street-journal"] = get_cookies("wsj_cookies.txt")
+    cookie_data["business-insider"] = {"__pnahc": "0"}
+
+    for stock in stock_to_query:
         for source in sources:
             print("Fetching data for: " + stock + ", source = " + source)
-            fetch_data_symbol(stock_to_query[stock], all_articles, stock, source, seen_urls)
-            time.sleep(3)
+
+            cookies = {}
+            if source in cookie_data:
+                cookies = cookie_data[source]
+
+            fetch_data_symbol(stock_to_query[stock], all_articles, stock, source, cookies, seen_urls)
+            #time.sleep(3)
             print("==============================================")
 
     with open("../data_store.json", "w") as f:
