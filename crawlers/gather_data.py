@@ -111,10 +111,9 @@ if __name__ == "__main__":
 
     # correlate stock ticker to search query
     stock_to_query["AAPL"] = "(Apple Inc OR Apple OR apple) NOT (Apples OR apples)"
-    '''stock_to_query["MSFT"] = "Microsoft OR Microsoft Corporation OR microsoft"
+    stock_to_query["MSFT"] = "Microsoft OR Microsoft Corporation OR microsoft"
     stock_to_query["GOOGL"] = "google OR Google"
     stock_to_query["FB"] = "Facebook OR facebook"
-    #stock_to_query ["SNAP"] = "Snapchat OR snapchat"
     stock_to_query["PYPL"] = "PayPal OR Paypal OR paypal"
     stock_to_query["TSLA"] = "Tesla OR tesla"
     stock_to_query["AMZN"] = "(AMZN OR Amazon OR amazon) NOT (forest)"
@@ -122,13 +121,11 @@ if __name__ == "__main__":
     stock_to_query["INTC"] = "INTC OR Intel"
     stock_to_query["NFLX"] = "Netflix OR netflix OR NFLX"
     stock_to_query["NVDA"] = "NVDA OR Nvdia OR nvidia"
-    stock_to_query["BABA"] = "BABA OR Alibaba OR alibaba"'''
+    stock_to_query["BABA"] = "BABA OR Alibaba OR alibaba"
 
     # initialize sources and cookies for some sources
-    #sources = ["reuters", "bloomberg", "business-insider", "techcrunch", "the-new-york-times", 
-    #"techradar", "financial-times", "engadget", "the-wall-street-journal"]
-
-    sources = ["bloomberg"]
+    sources = ["reuters", "bloomberg", "business-insider", "techcrunch", "the-new-york-times", 
+    "techradar", "financial-times", "engadget", "the-wall-street-journal"]
 
     cookie_data = {}
     cookie_data["the-wall-street-journal"] = get_cookies("wsj_cookies.txt")

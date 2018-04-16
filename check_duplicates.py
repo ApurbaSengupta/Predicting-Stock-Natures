@@ -17,10 +17,11 @@ for article in all_articles:
     else:
         group_host[host] = [article]
 
-host = "business-insider"
+host = "the-wall-street-journal"
 for article in group_host[host]:
     print(article["url"])
     print(article["article"])
+    print(article["date"])
     print("===========================")
 
 '''for host in group_host:
