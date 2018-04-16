@@ -22,8 +22,9 @@ def check_labeled_data():
     for article in labeled_data:
         print(article['article'])
         print("---------------------------------")
-        print(article['stock'])
-        print(article['label'])
+        print("Stock: " + article['stock'])
+        print("Source: " + article['source'])
+        print("Label: " + str(article['label']))
         print("========================================================================")
 
 
