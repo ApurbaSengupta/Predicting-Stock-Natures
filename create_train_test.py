@@ -46,6 +46,9 @@ def create_train_test(parsed_data):
     with open("data/test_data.json", "w") as f:
         json.dump(test_data, f)
 
+    with open("data/labeled_data.json", "w") as f:
+        json.dump(parsed_data, f)
+
 
 if __name__ == "__main__":
     create_train_test(remove_duplicate_data(clean_data()))
