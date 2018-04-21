@@ -1,3 +1,4 @@
+import nltk
 import json
 import sys
 
@@ -28,5 +29,16 @@ def check_labeled_data():
         print("========================================================================")
 
 
+def print_sents():
+    with open("data/train_data.json", "r") as f:
+        data = json.load(f)
+        article = data[1];
+        text = article['article']
+        sentences = nltk.sent_tokenize(text)
+        for sent in sentences:
+            print(sent)
+
+
+
 if __name__ == "__main__":
-    check_labeled_data()
+    print_sents()

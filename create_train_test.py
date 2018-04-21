@@ -18,7 +18,7 @@ def clean_data():
 
 
 # function serves to handle lack of content-seen test
-# in crawling. Multiple urls may end up having the same 
+# in crawling. Multiple urls may end up having the same
 # article content. Thus we hash articles here and only
 # add articles not in set of pre-computed hashes
 def remove_duplicate_data(parsed_data):
@@ -31,7 +31,7 @@ def remove_duplicate_data(parsed_data):
             seen_content.add(text_hash)
             dup_removed_data.append(article)
     return dup_removed_data
-    
+
 
 
 def create_train_test(parsed_data):
