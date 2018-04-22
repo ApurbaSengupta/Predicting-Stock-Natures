@@ -40,13 +40,13 @@ def create_train_test(parsed_data):
     test_data = [parsed_data[i] for i in range(num_points) if i in data_points]
     train_data = [parsed_data[i] for i in range(num_points) if i not in data_points]
 
-    with open("data/train_data.json", "w") as f:
+    with open("data/train_data2.json", "w") as f:
         json.dump(train_data, f)
 
-    with open("data/test_data.json", "w") as f:
+    with open("data/test_data2.json", "w") as f:
         json.dump(test_data, f)
 
-    with open("data/labeled_data.json", "w") as f:
+    with open("data/labeled_data2.json", "w") as f:
         json.dump(parsed_data, f)
 
 
