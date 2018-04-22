@@ -36,7 +36,7 @@ def remove_duplicate_data(parsed_data):
 
 def create_train_test(parsed_data):
     num_points = len(parsed_data)
-    data_points = set(random.sample(range(num_points), 300))
+    data_points = set(random.sample(range(num_points), 100))
     test_data = [parsed_data[i] for i in range(num_points) if i in data_points]
     train_data = [parsed_data[i] for i in range(num_points) if i not in data_points]
 

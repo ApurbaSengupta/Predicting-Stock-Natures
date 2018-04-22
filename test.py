@@ -19,14 +19,22 @@ def check_labeled_data():
     labeled_data = []
     with open("data/labeled_data.json", "r") as f:
         labeled_data = json.load(f)
+    num_articles0 = len([x for x in labeled_data if int(x['label']) == 0])
+    num_articles1 = len([x for x in labeled_data if int(x['label']) == 1])
+    num_articles2 = len([x for x in labeled_data if int(x['label']) == -1])
 
-    for article in labeled_data:
-        print(article['article'])
-        print("---------------------------------")
-        print("Stock: " + article['stock'])
-        print("Source: " + article['source'])
-        print("Label: " + str(article['label']))
-        print("========================================================================")
+    print("NUM_ARTICLES_0: ", num_articles0)
+    print("NUM_ARTICLES_1: ", num_articles1)
+    print("NUM_ARTICLES_-1: ", num_articles2)
+
+    '''for article in labeled_data:
+        if int(article['label']) == :
+            print(article['article'])
+            print("---------------------------------")
+            print("Stock: " + article['stock'])
+            print("Source: " + article['source'])
+            print("Label: " + str(article['label']))
+            print("========================================================================")'''
 
 
 def print_sents():
@@ -41,4 +49,5 @@ def print_sents():
 
 
 if __name__ == "__main__":
-    print_sents()
+    #print_sents()
+    check_labeled_data()

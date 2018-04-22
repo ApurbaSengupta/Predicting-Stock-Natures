@@ -91,29 +91,32 @@ def get_labeled_data(price_data, data_store, window):
     delt = timedelta(days=window)
 
     stocks_to_get_data = set(["PYPL"])
+    source_to_consider = set(["reuters", "bloomberg", "business-insider", "the-new-york-times", 
+        "financial-times", "the-wall-street-journal"])
     curr_stocks = [x for x in data_store if x not in stocks_to_get_data]
     #print(curr_stocks)
     for stock in curr_stocks:
         grouped_data[stock] = []
         for article in data_store[stock]:
-            article_date = article['date'].split("T")[0]
-            article_date_obj = parse_date(article_date, "-")
-            init_week_date = get_market_day(article_date_obj, price_data).isoformat()
-            init_price = price_data[init_week_date][stock].get_open_price()
+            if article['host'] in source_to_consider:
+                article_date = article['date'].split("T")[0]
+                article_date_obj = parse_date(article_date, "-")
+                init_week_date = get_market_day(article_date_obj, price_data).isoformat()
+                init_price = price_data[init_week_date][stock].get_open_price()
 
-            fin_date = get_market_day(article_date_obj, price_data, 2)
-            if fin_date == None:
-                continue
+                fin_date = get_market_day(article_date_obj, price_data, 2)
+                if fin_date == None:
+                    continue
 
-            fin_price = price_data[fin_date.isoformat()][stock].get_close_price()
-            if np.log(fin_price) - np.log(init_price) > 0.0031:
-                article["label"] = 1
-            elif np.log(fin_price) - np.log(init_price) < -0.0045:
-                article["label"] = -1    
-            else:
-                article["label"] = 0
-            grouped_data[stock].append(article)
-            all_data.append({"article": article['article'], "stock": stock, "label": article['label'], 
+                fin_price = price_data[fin_date.isoformat()][stock].get_close_price()
+                if np.log(fin_price) - np.log(init_price) > 0.0031:
+                    article["label"] = 1
+                elif np.log(fin_price) - np.log(init_price) < -0.0045:
+                    article["label"] = -1    
+                else:
+                    article["label"] = 0
+                grouped_data[stock].append(article)
+                all_data.append({"article": article['article'], "stock": stock, "label": article['label'], 
                 "date": article_date, "source": article['host'], "url": article['url']})
     return grouped_data, all_data
 
