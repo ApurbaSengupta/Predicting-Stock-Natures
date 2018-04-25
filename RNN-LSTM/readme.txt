@@ -1,1 +1,1 @@
-This folder contains inplementation of Recurrent Neural Netwok with data sets and the corressponding codes.
+This folder contains implementation of Long short-term memory (LSTM) Recurrent Neural Network (RNN) with data sets and the corresponding codes.
