@@ -1,6 +1,6 @@
 This folder contains the code for RNN implemented in PyTorch using Google Colaboratory on Google Drive. Hence, the code is to use Google Colaboratory which can be added as an additional app to your Google Drive. Please see https://www.kdnuggets.com/2018/02/google-colab-free-gpu-tutorial-tensorflow-keras-pytorch.html for more details. 
 
-The data files, GloVe files, Python notebooks and the .mat files generated can be found at the Google Drive links 
+The data files, GloVe files, Python notebooks and the .mat files generated can be found at the Google Drive links: 
 
 https://drive.google.com/drive/folders/1-TCzKp2vibweanpSED1vVbfr6M9G7mrq?usp=sharing
 https://drive.google.com/file/d/16Ij8-_Mdij8FMGayop95wIPfcU7Ul5iT/view?usp=sharing
