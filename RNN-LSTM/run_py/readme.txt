@@ -14,6 +14,4 @@ The raw data are available as labeled_data_bin.json which is a copy of oracle/da
 
 The notebook LSTM_RNN_Classifier_50d_GloVe.ipynb is the script that implements LSTM-RNN for the used data for 50d GloVe representations of words. The notebook LSTM_RNN_Classifier_100d_GloVe.ipynb is the script that implements LSTM-RNN for the used data for 50d GloVe representations of words.
 
-The .mat files created in the BATCH50d and BATCH100d folders are used in the MATLAB R2018 implementation of LSTM-RNN and are same as in oracle/RNN-LSTM/RNN_Matlab.
-
 The JSON files are extra files that can be used in the future.
