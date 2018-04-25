@@ -1,0 +1,1 @@
+This folder contains the code for RNN implemented in MATLAB-R2018. The data set used for the implementations are also uploaded. The file runsim_LSTM.m is the script that implements RNN for the used data.
