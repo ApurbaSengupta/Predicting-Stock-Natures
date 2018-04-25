@@ -8,6 +8,14 @@ Python 3.6 (with OpenSSL 1.0)
 ### Build Instructions
 pip install -r requirements.txt
 
+### Repository Format
+1. Code for SVM/Logistic Regression/Naive Bayes classificationn exists in
+the linear_models directory
+
+2. Code the RNN exists in the RNN-LSTM directory
+
+3. crawlers and scripts contains general data_parsing scripts
+
 ### Data Format
 labeled_data.json schema (example)
     [{article: text_of_article_here, stock: AAPL, label: 1, date: 2018-04-13, source: bloomberg}, {...}, ...]
