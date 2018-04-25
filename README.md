@@ -20,4 +20,4 @@ grouped_data.json schema (example)
     }
     
 ### Implementation
-The code for SVM, Logistic Regression and Naive Bayes classifiers can be found in oracle/linear_models/src folder and that for LSTM-RNN classifier using PyTorch and MATLAB R2018 can be found in the folders oracle/RNN-LSTM/run_py and oracle/RNN-LSTM/RNN_Matlab respectively. 
+The code for SVM, Logistic Regression and Naive Bayes classifiers can be found in linear_models/src folder and that for LSTM-RNN classifier using PyTorch and MATLAB R2018 can be found in the folders RNN-LSTM/run_py and RNN-LSTM/RNN_Matlab respectively. 
