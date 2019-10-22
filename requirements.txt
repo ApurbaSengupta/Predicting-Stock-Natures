@@ -9,7 +9,7 @@ jieba3k==0.35.1
 lxml==4.1.1
 newspaper3k==0.2.6
 nltk==3.2.5
-Pillow==5.0.0
+Pillow==6.2.0
 python-dateutil==2.6.1
 PyYAML==3.12
 requests==2.18.4
