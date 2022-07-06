@@ -6,7 +6,7 @@ feedfinder2==0.0.4
 feedparser==5.2.1
 idna==2.6
 jieba3k==0.35.1
-lxml==4.6.2
+lxml==4.9.1
 newspaper3k==0.2.6
 nltk==3.4.5
 Pillow>=8.1.1
